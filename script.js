@@ -1,8 +1,7 @@
-// ============ SETTINGS ============
-const MAPTILER_KEY = 'XMvtepjFjLa1oN9MaKeE';            // API key for geocoding
-const MOCK_API = 'https://jsonplaceholder.typicode.com'; // free fake API for POST and DELETE
 
-// speed in km/h and cost in rupees per km for each travel mode
+const MAPTILER_KEY = 'XMvtepjFjLa1oN9MaKeE';            
+const MOCK_API = 'https://jsonplaceholder.typicode.com'; 
+
 const MODES = {
   walk:   { speed: 5,   cost: 0 },
   car:    { speed: 55,  cost: 8 },
@@ -11,18 +10,16 @@ const MODES = {
   flight: { speed: 800, cost: 6 }
 };
 
-// ============ LOCAL STORAGE ============
-// localStorage only stores text, so we convert with JSON.stringify / JSON.parse
+
 let trips = JSON.parse(localStorage.getItem('trips')) || [];
 function saveTrips() {
   localStorage.setItem('trips', JSON.stringify(trips));
 }
 
-// shortcut so we don't type document.getElementById every time
+
 const $ = id => document.getElementById(id);
 
-// ============ LOGIN ============
-// returns an error message, or "" if the value is fine
+
 function checkUsername(name) {
   if (name.length < 3) return 'Username must be at least 3 characters.';
   return '';
@@ -40,11 +37,11 @@ $('loginBtn').addEventListener('click', () => {
   $('userError').textContent = checkUsername(name);
   $('passError').textContent = checkPassword(pw);
   $('loginError').textContent = '';
-  if ($('userError').textContent || $('passError').textContent) return; // stop if invalid
+  if ($('userError').textContent || $('passError').textContent) return; 
 
-  // demo check (a real app would ask a server to do this)
+  
   if (name === 'student' && pw === 'pass123') {
-    localStorage.setItem('user', name);   // remember that we are logged in
+    localStorage.setItem('user', name);   
     showPage();
   } else {
     $('loginError').textContent = 'Wrong username or password.';
@@ -56,7 +53,6 @@ $('logoutBtn').addEventListener('click', () => {
   showPage();
 });
 
-// show either the login page or the app, depending on whether a user is stored
 function showPage() {
   const user = localStorage.getItem('user');
   $('loginPage').hidden = !!user;
@@ -67,19 +63,17 @@ function showPage() {
   }
 }
 
-// ============ API CALLS ============
-// GET: ask MapTiler for the coordinates of a place name
+
 async function getCoordinates(place) {
   const url = 'https://api.maptiler.com/geocoding/' + encodeURIComponent(place) + '.json?key=' + MAPTILER_KEY + '&limit=1';
-  const response = await fetch(url);                 // GET is the default method
+  const response = await fetch(url);                 
   if (!response.ok) throw new Error('Place search failed (error ' + response.status + ').');
-  const data = await response.json();                // turn the text reply into an object
+  const data = await response.json();               
   if (data.features.length === 0) throw new Error('Could not find "' + place + '".');
   const f = data.features[0];
   return { lon: f.center[0], lat: f.center[1], name: f.place_name.split(',')[0] };
 }
 
-// POST / DELETE: talk to a fake server (it pretends to save, nothing is really stored)
 async function callMockApi(method, path, body) {
   const options = { method: method };
   if (body) {
@@ -90,8 +84,6 @@ async function callMockApi(method, path, body) {
   return response.json();
 }
 
-// ============ MATHS ============
-// haversine formula: straight-line distance between two coordinates in km
 function distanceKm(a, b) {
   const rad = d => d * Math.PI / 180;
   const dLat = rad(b.lat - a.lat);
@@ -101,21 +93,19 @@ function distanceKm(a, b) {
   return 2 * 6371 * Math.asin(Math.sqrt(h));
 }
 
-// ============ ADD TRIP ============
 $('addBtn').addEventListener('click', async () => {
   const from = $('from').value.trim();
   const to = $('to').value.trim();
   const mode = $('mode').value;
 
-  // form validation
   if (from.length < 2 || to.length < 2) { $('tripError').textContent = 'Enter both places (2+ letters).'; return; }
   if (from.toLowerCase() === to.toLowerCase()) { $('tripError').textContent = 'The two places must be different.'; return; }
   $('tripError').textContent = 'Working...';
   $('addBtn').disabled = true;
 
   try {
-    const a = await getCoordinates(from);   // GET request 1
-    const b = await getCoordinates(to);     // GET request 2
+    const a = await getCoordinates(from);   
+    const b = await getCoordinates(to);     
 
     const km = distanceKm(a, b);
     const hours = km / MODES[mode].speed;
@@ -124,8 +114,8 @@ $('addBtn').addEventListener('click', async () => {
     const trip = { id: Date.now(), from: a.name, to: b.name, mode: mode,
                    km: Math.round(km), hours: hours.toFixed(1), cost: Math.round(cost) };
 
-    const reply = await callMockApi('POST', '/posts', trip);  // POST request: "save" on the fake server
-    trip.serverId = reply.id;                                  // the fake server sends back an id
+    const reply = await callMockApi('POST', '/posts', trip); 
+    trip.serverId = reply.id;                                  
 
     trips.push(trip);
     saveTrips();
@@ -139,14 +129,13 @@ $('addBtn').addEventListener('click', async () => {
   $('addBtn').disabled = false;
 });
 
-// ============ TABLE ============
+
 function renderTable() {
   const text = $('search').value.toLowerCase();
 
-  // filter() keeps only the trips whose places match the search box
+
   const shown = trips.filter(t => (t.from + ' ' + t.to).toLowerCase().includes(text));
 
-  // map() turns each trip into a table row, join() glues the rows into one string
   $('tripTable').innerHTML = shown.map(t => `
     <tr>
       <td>${t.from}</td>
@@ -161,13 +150,12 @@ function renderTable() {
 
 $('search').addEventListener('input', renderTable);
 
-// one listener on the table handles every Delete button (even ones added later)
 $('tripTable').addEventListener('click', async (e) => {
   if (e.target.tagName !== 'BUTTON') return;
   const id = Number(e.target.dataset.id);
   const trip = trips.find(t => t.id === id);
-  try { await callMockApi('DELETE', '/posts/' + trip.serverId); } catch (err) { /* fake server: ignore errors */ }
-  trips = trips.filter(t => t.id !== id);   // keep every trip except the deleted one
+  try { await callMockApi('DELETE', '/posts/' + trip.serverId); } catch (err) {  }
+  trips = trips.filter(t => t.id !== id); 
   saveTrips();
   renderTable();
 });
@@ -180,5 +168,4 @@ $('clearBtn').addEventListener('click', () => {
   }
 });
 
-// ============ START ============
 showPage();
