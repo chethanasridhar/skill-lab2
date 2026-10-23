@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simple Trip Planner</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ========== PAGE 1: LOGIN ========== -->
+<div id="loginPage" class="box">
+  <h2>Login</h2>
+  <p>Demo account: username <b>student</b>, password <b>pass123</b></p>
+  <input id="username" placeholder="Username">
+  <div class="error" id="userError"></div>
+  <input id="password" type="password" placeholder="Password">
+  <div class="error" id="passError"></div>
+  <button id="loginBtn">Login</button>
+  <div class="error" id="loginError"></div>
+</div>
+
+<!-- ========== PAGE 2: TRIP PLANNER ========== -->
+<div id="appPage" hidden>
+  <div class="box top">
+    <h2 id="welcome"></h2>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+  <div class="box">
+    <h3>Add a trip</h3>
+    <input id="from" placeholder="From (e.g. Bengaluru)">
+    <input id="to" placeholder="To (e.g. Mysuru)">
+    <select id="mode">
+      <option value="walk">Walk</option>
+      <option value="car">Car</option>
+      <option value="bus">Bus</option>
+      <option value="train">Train</option>
+      <option value="flight">Flight</option>
+    </select>
+    <div class="error" id="tripError"></div>
+    <button id="addBtn">Add trip</button>
+  </div>
+
+  <div class="box">
+    <h3>My trips</h3>
+    <input id="search" placeholder="Search by place name...">
+    <table>
+      <thead>
+        <tr><th>From</th><th>To</th><th>Mode</th><th>Distance</th><th>Time</th><th>Cost</th><th></th></tr>
+      </thead>
+      <tbody id="tripTable"></tbody>
+    </table>
+    <button id="clearBtn" class="red">Clear all</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
