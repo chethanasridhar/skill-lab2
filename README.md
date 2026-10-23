@@ -1,40 +1,48 @@
 # Trip Planner Application
 
-A lightweight, single-page web application for calculating distance, estimated travel time, and travel costs between two locations using multiple transport modes. Features an interactive map, geocoding, local trip storage, and trip history analytics.
+A responsive web application to plan trips, compare transport modes, estimate travel time and costs, and manage trip history.
 
 ## Features
 
-- **Interactive Map:** Displays routes and location markers using Leaflet and MapTiler.
-- **Geocoding:** Uses the MapTiler Geocoding API with local caching to reduce network requests.
-- **Multiple Transport Modes:** Supports walking, bicycle, car, bus, train, and flight with configurable speed, cost, and distance multipliers.
-- **Traveler-Based Cost Calculation:** Adjusts fares based on the number of travelers and whether costs apply per person or per vehicle.
-- **Trip History and Analytics:**
-  - Stores planned trips in `localStorage`.
-  - Tracks total trips, cumulative distance, and estimated expenditure.
-  - Supports searching and filtering by transport mode, distance, and keywords.
-- **Responsive and Accessible Design:** Uses semantic HTML5, CSS variables, CSS Grid, Flexbox, accessible labels, and keyboard-friendly focus states.
+- Interactive maps and route visualization using Leaflet and MapTiler.
+- Geocoding API integration with local caching.
+- Six transport modes: walking, bicycle, car, bus, train, and flight.
+- Traveler-based fare calculation and travel estimates.
+- Login form with input validation.
+- Trip history, analytics, tables, search, and filters.
+- Persistent data storage using `localStorage`.
+- Interactive buttons, form events, and responsive styling.
+- Modular JavaScript methods and framework experimentation.
 
-## Technologies Used
+## Technologies
 
 - HTML5 and CSS3
 - Vanilla JavaScript (ES6+)
-- [Leaflet.js](https://leafletjs.com/) — Interactive mapping
-- [MapTiler API](https://www.maptiler.com/) — Map tiles and geocoding
+- Leaflet.js
+- MapTiler API
+- Browser Local Storage
 
 ## Getting Started
 
-### Prerequisites
-
-A modern web browser and a MapTiler API key.
-
-### MapTiler API Setup
-
-1. Create a free account at [MapTiler](https://www.maptiler.com/).
-2. Obtain an API key from the MapTiler Cloud dashboard.
-3. Open `index.html` and replace the placeholder key in the JavaScript section:
+1. Obtain an API key from [MapTiler](https://www.maptiler.com/).
+2. Configure the key in your JavaScript file:
 
 ```javascript
 const MAPTILER_KEY = 'YOUR_MAPTILER_API_KEY';
 ```
 
-4. Open the application in your browser and start planning trips.
+3. Run the application using a local development server.
+
+## Project Structure
+
+```text
+trip-planner/
+├── index.html
+├── style.css
+├── script.js
+└── README.md
+```
+
+## Limitations
+
+Travel times and costs are estimates. Client-side login validation does not provide secure authentication.
