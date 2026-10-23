@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,27 +15,22 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Segoe UI",sys
 h1{margin:0;font:800 2rem/1.1 "Trebuchet MS","Segoe UI",sans-serif;letter-spacing:-.02em}
 .top p{margin:6px 0 16px;color:var(--muted)}
 h2{margin:0 0 12px;font-size:1.05rem}
-
 .totals{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
 .totals div{background:var(--blue);color:#fff;border-radius:8px;padding:12px 16px}
 .totals b{display:block;font:800 1.6rem/1.2 "Trebuchet MS",sans-serif}
 .totals small{opacity:.85}
-
 main{display:grid;grid-template-columns:320px 1fr;gap:20px;padding-bottom:24px;align-items:start}
 .right{display:grid;gap:20px;min-width:0}
 @media(max-width:860px){main{grid-template-columns:1fr}}
-
 .card{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:18px}
 .mapcard{padding:0;overflow:hidden}
 #map{height:340px;background:#dfe6ef}
-
 .field{margin-bottom:12px}
 label{display:block;font-size:.85rem;font-weight:600;margin-bottom:3px}
 input,select{width:100%;padding:8px 10px;border:1px solid #98a8c4;border-radius:5px;font-size:.95rem;background:#fff;color:var(--ink)}
 input:focus,select:focus,button:focus-visible{outline:3px solid #9db6e8;outline-offset:1px}
 .invalid{border-color:var(--err)}
 .err{color:var(--err);font-size:.8rem;min-height:1.1em;margin-top:2px}
-
 button{cursor:pointer;border:0;border-radius:5px;padding:9px 14px;font-size:.92rem;font-weight:600}
 .go{background:var(--accent);color:#fff;width:100%}
 .go:disabled{opacity:.6;cursor:wait}
@@ -43,7 +39,6 @@ button{cursor:pointer;border:0;border-radius:5px;padding:9px 14px;font-size:.92r
 .del{background:none;color:var(--err);padding:4px 8px}
 .status{margin:10px 0 0;font-size:.88rem;color:var(--muted);min-height:1.3em}
 .status.bad{color:var(--err)}
-
 .ticket{margin:14px;border:2px dashed var(--blue);border-radius:8px;padding:14px;background:#fff}
 .route{display:flex;align-items:center;gap:10px;font:700 1.1rem "Trebuchet MS",sans-serif}
 .route .line{flex:1;border-top:2px solid var(--blue);position:relative;min-width:40px}
@@ -52,7 +47,6 @@ button{cursor:pointer;border:0;border-radius:5px;padding:9px 14px;font-size:.92r
 .stat b{display:block;font:800 1.4rem "Trebuchet MS",sans-serif;color:var(--blue)}
 .stat small{color:var(--muted)}
 .hidden{display:none}
-
 .filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:12px}
 .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
 ul{list-style:none;margin:0;padding:0}
@@ -62,281 +56,318 @@ li small{display:block;color:var(--muted)}
 .empty{grid-column:1/-1;color:var(--muted);text-align:center;padding:14px 0}
 @media(max-width:520px){li{grid-template-columns:1fr auto}}
 footer{padding-bottom:28px;font-size:.8rem;color:var(--muted)}
-
 </style>
 </head>
 <body>
 <header class="top">
-  <h1>Trip Planner</h1>
-  <p>Search two places, pick how you'll travel, and see the route, time and cost on the map.</p>
+<h1>Trip Planner</h1>
+<p>Search two places, pick how you'll travel, and see the route, time and cost on the map.</p>
 </header>
 
 <section class="totals" aria-label="Your totals">
-  <div><b id="tTrips">0</b><small>trips saved</small></div>
-  <div><b id="tKm">0</b><small>km planned</small></div>
-  <div><b id="tCost">₹0</b><small>estimated spend</small></div>
+<div><b id="tTrips">0</b><small>trips saved</small></div>
+<div><b id="tKm">0</b><small>km planned</small></div>
+<div><b id="tCost">₹0</b><small>estimated spend</small></div>
 </section>
 
 <main>
-  <section class="card">
-    <h2>Plan a trip</h2>
-    <form id="form" novalidate>
-      <div class="field"><label for="from">From</label>
-        <input id="from" type="text" placeholder="e.g. Bengaluru" autocomplete="off">
-        <div class="err" id="fromErr"></div></div>
-      <div class="field"><label for="to">To</label>
-        <input id="to" type="text" placeholder="e.g. Mysuru" autocomplete="off">
-        <div class="err" id="toErr"></div></div>
-      <div class="field"><label for="mode">Travel mode</label>
-        <select id="mode"></select></div>
-      <div class="field"><label for="people">Travelers</label>
-        <input id="people" type="number" min="1" max="20" step="1" value="1">
-        <div class="err" id="peopleErr"></div></div>
-      <button class="go" id="go" type="submit">Plan trip</button>
-      <p class="status" id="status" role="status"></p>
-    </form>
-  </section>
+<section class="card">
+<h2>Plan a trip</h2>
+<form id="form" novalidate>
+<div class="field">
+<label for="from">From</label>
+<input id="from" type="text" placeholder="e.g. Bengaluru" autocomplete="off">
+<div class="err" id="fromErr"></div>
+</div>
+<div class="field">
+<label for="to">To</label>
+<input id="to" type="text" placeholder="e.g. Mysuru" autocomplete="off">
+<div class="err" id="toErr"></div>
+</div>
+<div class="field">
+<label for="mode">Travel mode</label>
+<select id="mode"></select>
+</div>
+<div class="field">
+<label for="people">Travelers</label>
+<input id="people" type="number" min="1" max="20" step="1" value="1">
+<div class="err" id="peopleErr"></div>
+</div>
+<button class="go" id="go" type="submit">Plan trip</button>
+<p class="status" id="status" role="status"></p>
+</form>
+</section>
 
-  <section class="right">
-    <div class="card mapcard">
-      <div id="map" aria-label="Map of the planned trip"></div>
-      <div class="ticket hidden" id="ticket" aria-live="polite">
-        <div class="route"><span id="rFrom"></span><span class="line"></span><span id="rTo"></span></div>
-        <div class="stats">
-          <div class="stat"><b id="rDist"></b><small>distance</small></div>
-          <div class="stat"><b id="rTime"></b><small>estimated time</small></div>
-          <div class="stat"><b id="rCost"></b><small id="rCostNote">total cost</small></div>
-        </div>
-      </div>
-    </div>
+<section class="right">
+<div class="card mapcard">
+<div id="map" aria-label="Map of the planned trip"></div>
+<div class="ticket hidden" id="ticket" aria-live="polite">
+<div class="route"><span id="rFrom"></span><span class="line"></span><span id="rTo"></span></div>
+<div class="stats">
+<div class="stat"><b id="rDist"></b><small>distance</small></div>
+<div class="stat"><b id="rTime"></b><small>estimated time</small></div>
+<div class="stat"><b id="rCost"></b><small id="rCostNote">total cost</small></div>
+</div>
+</div>
+</div>
 
-    <div class="card">
-      <h2>Trip history</h2>
-      <div class="filters">
-        <div><label for="fMode">Mode</label><select id="fMode"></select></div>
-        <div><label for="fMin">Min km</label><input id="fMin" type="number" min="0" placeholder="0"></div>
-        <div><label for="fMax">Max km</label><input id="fMax" type="number" min="0" placeholder="any"></div>
-        <div><label for="fText">Search</label><input id="fText" type="search" placeholder="Place name"></div>
-      </div>
-      <div class="row">
-        <span id="summary"></span>
-        <span>
-          <button class="ghost" id="reset" type="button">Reset filters</button>
-          <button class="ghost" id="clear" type="button">Clear all</button>
-        </span>
-      </div>
-      <ul id="list"></ul>
-    </div>
-  </section>
+<div class="card">
+<h2>Trip history</h2>
+<div class="filters">
+<div><label for="fMode">Mode</label><select id="fMode"></select></div>
+<div><label for="fMin">Min km</label><input id="fMin" type="number" min="0" placeholder="0"></div>
+<div><label for="fMax">Max km</label><input id="fMax" type="number" min="0" placeholder="any"></div>
+<div><label for="fText">Search</label><input id="fText" type="search" placeholder="Place name"></div>
+</div>
+<div class="row">
+<span id="summary"></span>
+<span>
+<button class="ghost" id="reset" type="button">Reset filters</button>
+<button class="ghost" id="clear" type="button">Clear all</button>
+</span>
+</div>
+<ul id="list"></ul>
+</div>
+</section>
 </main>
 
 <footer>Map © MapTiler © OpenStreetMap contributors. Distances are straight-line distances adjusted per mode; costs and times are rough estimates in ₹.</footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-// ================= Config =================
-const MAPTILER_KEY = 'XMvtepjFjLa1oN9MaKeE';   // restrict this key to your site's origins in the MapTiler dashboard
+const MAPTILER_KEY = 'XMvtepjFjLa1oN9MaKeE';
 const KEY_TRIPS = 'tripPlanner.trips.v1';
 const KEY_GEO = 'tripPlanner.geocache.v1';
 
-// road: multiplier on straight-line distance | speed: km/h | cost: ₹ per km
-// perPerson: true = every traveler pays, false = one vehicle shared | fixedH: extra hours (airport time)
 const MODES = {
-  walk:   {label:'Walk',    road:1.2,  speed:5,   cost:0,   perPerson:true,  fixedH:0},
-  bike:   {label:'Bicycle', road:1.2,  speed:15,  cost:0,   perPerson:true,  fixedH:0},
-  car:    {label:'Car',     road:1.25, speed:55,  cost:8,   perPerson:false, fixedH:0},
-  bus:    {label:'Bus',     road:1.3,  speed:45,  cost:2,   perPerson:true,  fixedH:0},
-  train:  {label:'Train',   road:1.2,  speed:70,  cost:1.5, perPerson:true,  fixedH:0},
-  flight: {label:'Flight',  road:1.0,  speed:800, cost:6,   perPerson:true,  fixedH:2.5}
+walk: {label:'Walk',road:1.2,speed:5,cost:0,perPerson:true,fixedH:0},
+bike: {label:'Bicycle',road:1.2,speed:15,cost:0,perPerson:true,fixedH:0},
+car: {label:'Car',road:1.25,speed:55,cost:8,perPerson:false,fixedH:0},
+bus: {label:'Bus',road:1.3,speed:45,cost:2,perPerson:true,fixedH:0},
+train: {label:'Train',road:1.2,speed:70,cost:1.5,perPerson:true,fixedH:0},
+flight: {label:'Flight',road:1.0,speed:800,cost:6,perPerson:true,fixedH:2.5}
 };
 
-// ================= Helpers =================
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
+
 function fmtTime(h){
-  const mins = Math.round(h * 60);
-  if (mins < 60) return `${mins} min`;
-  const hh = Math.floor(mins / 60), mm = mins % 60;
-  return hh >= 48 ? `${(hh / 24).toFixed(1)} days` : `${hh} h ${mm} min`;
-}
-function haversineKm(a, b){
-  const R = 6371, rad = d => d * Math.PI / 180;
-  const dLat = rad(b.lat - a.lat), dLon = rad(b.lon - a.lon);
-  const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
+const mins = Math.round(h * 60);
+if (mins < 60) return `${mins} min`;
+const hh = Math.floor(mins / 60), mm = mins % 60;
+return hh >= 48 ? `${(hh / 24).toFixed(1)} days` : `${hh} h ${mm} min`;
 }
 
-// ================= Local storage =================
-function read(key, fallback){ try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
-function write(key, val){ try { localStorage.setItem(key, JSON.stringify(val)); } catch {} }
-let trips = read(KEY_TRIPS, []);
-let geoCache = read(KEY_GEO, {});
+function haversineKm(a,b){
+const R = 6371, rad = d => d * Math.PI / 180;
+const dLat = rad(b.lat-a.lat), dLon = rad(b.lon-a.lon);
+const h = Math.sin(dLat/2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dLon/2) ** 2;
+return 2 * R * Math.asin(Math.sqrt(h));
+}
 
-// ================= Map (Leaflet + MapTiler tiles) =================
-const map = L.map('map').setView([20.59, 78.96], 4);
-L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`, {
-  attribution: '© MapTiler © OpenStreetMap contributors', maxZoom: 18
+function read(key,fallback){
+try{return JSON.parse(localStorage.getItem(key)) ?? fallback;}
+catch{return fallback;}
+}
+
+function write(key,val){
+try{localStorage.setItem(key,JSON.stringify(val));}
+catch{}
+}
+
+let trips = read(KEY_TRIPS,[]);
+let geoCache = read(KEY_GEO,{});
+
+const map = L.map('map').setView([20.59,78.96],4);
+L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`,{
+attribution:'© MapTiler © OpenStreetMap contributors',maxZoom:18
 }).addTo(map);
+
 const routeLayer = L.layerGroup().addTo(map);
 
 function showOnMap(t){
-  routeLayer.clearLayers();
-  const a = [t.fromLat, t.fromLon], b = [t.toLat, t.toLon];
-  L.marker(a).addTo(routeLayer).bindPopup(`<b>Start</b><br>${esc(t.from)}`);
-  L.marker(b).addTo(routeLayer).bindPopup(`<b>Destination</b><br>${esc(t.to)}`);
-  L.polyline([a, b], {color: '#e4572e', weight: 4, dashArray: '8 8'}).addTo(routeLayer);
-  map.fitBounds([a, b], {padding: [50, 50]});
+routeLayer.clearLayers();
+const a = [t.fromLat,t.fromLon], b = [t.toLat,t.toLon];
+L.marker(a).addTo(routeLayer).bindPopup(`<b>Start</b><br>${esc(t.from)}`);
+L.marker(b).addTo(routeLayer).bindPopup(`<b>Destination</b><br>${esc(t.to)}`);
+L.polyline([a,b],{color:'#e4572e',weight:4,dashArray:'8 8'}).addTo(routeLayer);
+map.fitBounds([a,b],{padding:[50,50]});
 }
 
-// ================= Setup selects =================
-const modeOptions = Object.entries(MODES).map(([k, m]) => `<option value="${k}">${m.label}</option>`).join('');
+const modeOptions = Object.entries(MODES).map(([k,m])=>`<option value="${k}">${m.label}</option>`).join('');
 $('mode').innerHTML = modeOptions;
 $('fMode').innerHTML = '<option value="">All modes</option>' + modeOptions;
 
-// ================= Form validation =================
-function setErr(id, msg){
-  $(id + 'Err').textContent = msg;
-  $(id).classList.toggle('invalid', !!msg);
-  return !msg;
+function setErr(id,msg){
+$(id+'Err').textContent = msg;
+$(id).classList.toggle('invalid',!!msg);
+return !msg;
 }
+
 function validatePlace(id){
-  const v = $(id).value.trim();
-  if (!v) return setErr(id, 'Enter a place name.');
-  if (v.length < 2) return setErr(id, 'Use at least 2 characters.');
-  if (v.length > 80) return setErr(id, 'Keep it under 80 characters.');
-  if (!/\p{L}/u.test(v)) return setErr(id, 'Place names need letters.');
-  return setErr(id, '');
+const v = $(id).value.trim();
+if(!v) return setErr(id,'Enter a place name.');
+if(v.length<2) return setErr(id,'Use at least 2 characters.');
+if(v.length>80) return setErr(id,'Keep it under 80 characters.');
+if(!/\p{L}/u.test(v)) return setErr(id,'Place names need letters.');
+return setErr(id,'');
 }
+
 function validatePeople(){
-  const raw = $('people').value.trim(), n = Number(raw);
-  if (raw === '') return setErr('people', 'Enter the number of travelers.');
-  if (!Number.isInteger(n)) return setErr('people', 'Use a whole number.');
-  if (n < 1 || n > 20) return setErr('people', 'Travelers must be between 1 and 20.');
-  return setErr('people', '');
+const raw = $('people').value.trim(), n = Number(raw);
+if(raw==='') return setErr('people','Enter the number of travelers.');
+if(!Number.isInteger(n)) return setErr('people','Use a whole number.');
+if(n<1||n>20) return setErr('people','Travelers must be between 1 and 20.');
+return setErr('people','');
 }
+
 function validateDifferent(){
-  const a = $('from').value.trim().toLowerCase(), b = $('to').value.trim().toLowerCase();
-  if (a && a === b) return setErr('to', 'Destination must be different from the start.');
-  return true;
+const a = $('from').value.trim().toLowerCase(), b = $('to').value.trim().toLowerCase();
+if(a&&a===b) return setErr('to','Destination must be different from the start.');
+return true;
 }
-$('from').addEventListener('blur', () => validatePlace('from'));
-$('to').addEventListener('blur', () => validatePlace('to'));
-$('people').addEventListener('blur', validatePeople);
 
-// ================= API: MapTiler geocoding =================
+$('from').addEventListener('blur',()=>validatePlace('from'));
+$('to').addEventListener('blur',()=>validatePlace('to'));
+$('people').addEventListener('blur',validatePeople);
+
 async function geocode(place){
-  const k = place.trim().toLowerCase();
-  if (geoCache[k]) return geoCache[k];                        // cached: no network call
-  const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(place.trim())}.json?key=${MAPTILER_KEY}&limit=1`;
-  const res = await fetch(url);
-  if (res.status === 401 || res.status === 403) throw new Error('MapTiler rejected the API key. Check the key and its allowed origins.');
-  if (res.status === 429) throw new Error('Too many requests. Wait a moment and try again.');
-  if (!res.ok) throw new Error(`The place search failed (HTTP ${res.status}).`);
-  const data = await res.json();
-  if (!data.features || !data.features.length) throw new Error(`Couldn't find "${place}". Try adding a city or country.`);
-  const f = data.features[0];
-  const out = {lon: f.center[0], lat: f.center[1], name: f.place_name.split(',').slice(0, 2).join(',').trim()};
-  geoCache[k] = out; write(KEY_GEO, geoCache);
-  return out;
+const k = place.trim().toLowerCase();
+if(geoCache[k]) return geoCache[k];
+const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(place.trim())}.json?key=${MAPTILER_KEY}&limit=1`;
+const res = await fetch(url);
+if(res.status===401||res.status===403) throw new Error('MapTiler rejected the API key. Check the key and its allowed origins.');
+if(res.status===429) throw new Error('Too many requests. Wait a moment and try again.');
+if(!res.ok) throw new Error(`The place search failed (HTTP ${res.status}).`);
+const data = await res.json();
+if(!data.features||!data.features.length) throw new Error(`Couldn't find "${place}". Try adding a city or country.`);
+const f = data.features[0];
+const out = {lon:f.center[0],lat:f.center[1],name:f.place_name.split(',').slice(0,2).join(',').trim()};
+geoCache[k] = out;
+write(KEY_GEO,geoCache);
+return out;
 }
 
-// ================= Submit =================
-function setStatus(msg, bad){ $('status').textContent = msg; $('status').classList.toggle('bad', !!bad); }
+function setStatus(msg,bad){
+$('status').textContent = msg;
+$('status').classList.toggle('bad',!!bad);
+}
 
-$('form').addEventListener('submit', async e => {
-  e.preventDefault();
-  const ok = [validatePlace('from'), validatePlace('to'), validatePeople()].every(Boolean) && validateDifferent();
-  if (!ok) return;
-  $('go').disabled = true; setStatus('Looking up places…');
-  try {
-    const [a, b] = await Promise.all([geocode($('from').value), geocode($('to').value)]);
-    const straight = haversineKm(a, b);
-    if (straight < 0.05) throw new Error('Those two places resolve to the same spot.');
-    const modeKey = $('mode').value, m = MODES[modeKey], people = Number($('people').value);
-    const km = straight * m.road;
-    const hours = km / m.speed + m.fixedH;
-    const total = m.perPerson ? km * m.cost * people : km * m.cost;
-    const trip = {
-      id: Date.now(), from: a.name, to: b.name, fromLat: a.lat, fromLon: a.lon, toLat: b.lat, toLon: b.lon,
-      mode: modeKey, people, km: +km.toFixed(1), hours: +hours.toFixed(2), total: Math.round(total)
-    };
-    trips.unshift(trip); write(KEY_TRIPS, trips);
-    showTicket(trip); showOnMap(trip); render(); setStatus('Trip saved to history.');
-  } catch (err) {
-    setStatus(err instanceof TypeError ? 'Network error. Check your connection and try again.' : err.message, true);
-  } finally {
-    $('go').disabled = false;
-  }
+$('form').addEventListener('submit',async e=>{
+e.preventDefault();
+const ok = [validatePlace('from'),validatePlace('to'),validatePeople()].every(Boolean)&&validateDifferent();
+if(!ok) return;
+$('go').disabled = true;
+setStatus('Looking up places…');
+try{
+const [a,b] = await Promise.all([geocode($('from').value),geocode($('to').value)]);
+const straight = haversineKm(a,b);
+if(straight<0.05) throw new Error('Those two places resolve to the same spot.');
+const modeKey = $('mode').value, m = MODES[modeKey], people = Number($('people').value);
+const km = straight * m.road;
+const hours = km / m.speed + m.fixedH;
+const total = m.perPerson ? km * m.cost * people : km * m.cost;
+const trip = {
+id:Date.now(),from:a.name,to:b.name,fromLat:a.lat,fromLon:a.lon,toLat:b.lat,toLon:b.lon,
+mode:modeKey,people,km:+km.toFixed(1),hours:+hours.toFixed(2),total:Math.round(total)
+};
+trips.unshift(trip);
+write(KEY_TRIPS,trips);
+showTicket(trip);
+showOnMap(trip);
+render();
+setStatus('Trip saved to history.');
+}catch(err){
+setStatus(err instanceof TypeError?'Network error. Check your connection and try again.':err.message,true);
+}finally{
+$('go').disabled = false;
+}
 });
 
 function showTicket(t){
-  const m = MODES[t.mode];
-  $('ticket').classList.remove('hidden');
-  $('rFrom').textContent = t.from; $('rTo').textContent = t.to;
-  $('rDist').textContent = t.km.toLocaleString('en-IN') + ' km';
-  $('rTime').textContent = fmtTime(t.hours);
-  $('rCost').textContent = m.cost ? inr(t.total) : 'Free';
-  $('rCostNote').textContent = m.cost
-    ? (m.perPerson ? `total for ${t.people} traveler${t.people > 1 ? 's' : ''}` : `per car · ${inr(t.total / t.people)} each`)
-    : 'no fuel or fare cost';
+const m = MODES[t.mode];
+$('ticket').classList.remove('hidden');
+$('rFrom').textContent = t.from;
+$('rTo').textContent = t.to;
+$('rDist').textContent = t.km.toLocaleString('en-IN') + ' km';
+$('rTime').textContent = fmtTime(t.hours);
+$('rCost').textContent = m.cost ? inr(t.total) : 'Free';
+$('rCostNote').textContent = m.cost
+? (m.perPerson ? `total for ${t.people} traveler${t.people>1?'s':''}` : `per car · ${inr(t.total/t.people)} each`)
+: 'no fuel or fare cost';
 }
 
-// ================= History: filters + rendering =================
 function filtered(){
-  const mode = $('fMode').value, q = $('fText').value.trim().toLowerCase();
-  const min = $('fMin').value === '' ? null : Number($('fMin').value);
-  const max = $('fMax').value === '' ? null : Number($('fMax').value);
-  return trips.filter(t =>
-    (!mode || t.mode === mode) &&
-    (min === null || t.km >= min) &&
-    (max === null || t.km <= max) &&
-    (!q || (t.from + ' ' + t.to).toLowerCase().includes(q)));
+const mode = $('fMode').value, q = $('fText').value.trim().toLowerCase();
+const min = $('fMin').value==='' ? null : Number($('fMin').value);
+const max = $('fMax').value==='' ? null : Number($('fMax').value);
+return trips.filter(t=>
+(!mode||t.mode===mode)&&
+(min===null||t.km>=min)&&
+(max===null||t.km<=max)&&
+(!q||(t.from+' '+t.to).toLowerCase().includes(q)));
 }
 
 function render(){
-  // totals across ALL saved trips
-  $('tTrips').textContent = trips.length;
-  $('tKm').textContent = Math.round(trips.reduce((s, t) => s + t.km, 0)).toLocaleString('en-IN');
-  $('tCost').textContent = inr(trips.reduce((s, t) => s + t.total, 0));
+$('tTrips').textContent = trips.length;
+$('tKm').textContent = Math.round(trips.reduce((s,t)=>s+t.km,0)).toLocaleString('en-IN');
+$('tCost').textContent = inr(trips.reduce((s,t)=>s+t.total,0));
 
-  const rows = filtered();
-  const km = rows.reduce((s, t) => s + t.km, 0);
-  $('summary').textContent = `${rows.length} ${rows.length === 1 ? 'trip' : 'trips'} · ${Math.round(km).toLocaleString('en-IN')} km`;
-  $('list').innerHTML = rows.length ? rows.map(t => `
-    <li>
-      <div><b>${esc(t.from)} → ${esc(t.to)}</b>
-        <small>${MODES[t.mode].label} · ${t.people} traveler${t.people > 1 ? 's' : ''} · ${fmtTime(t.hours)}</small></div>
-      <div class="right-align"><b>${t.km.toLocaleString('en-IN')} km</b><small>${MODES[t.mode].cost ? inr(t.total) : 'Free'}</small></div>
-      <button class="link" data-show="${t.id}">Show</button>
-      <button class="del" data-del="${t.id}" aria-label="Delete trip from ${esc(t.from)} to ${esc(t.to)}">Delete</button>
-    </li>`).join('')
-    : `<li><span class="empty">${trips.length ? 'No trips match these filters.' : 'No trips yet. Plan your first one on the left.'}</span></li>`;
+const rows = filtered();
+const km = rows.reduce((s,t)=>s+t.km,0);
+$('summary').textContent = `${rows.length} ${rows.length===1?'trip':'trips'} · ${Math.round(km).toLocaleString('en-IN')} km`;
+
+$('list').innerHTML = rows.length ? rows.map(t=>`
+<li>
+<div><b>${esc(t.from)} → ${esc(t.to)}</b>
+<small>${MODES[t.mode].label} · ${t.people} traveler${t.people>1?'s':''} · ${fmtTime(t.hours)}</small></div>
+<div class="right-align"><b>${t.km.toLocaleString('en-IN')} km</b><small>${MODES[t.mode].cost?inr(t.total):'Free'}</small></div>
+<button class="link" data-show="${t.id}">Show</button>
+<button class="del" data-del="${t.id}" aria-label="Delete trip from ${esc(t.from)} to ${esc(t.to)}">Delete</button>
+</li>`).join('')
+: `<li><span class="empty">${trips.length?'No trips match these filters.':'No trips yet. Plan your first one on the left.'}</span></li>`;
 }
 
-// event delegation: one listener handles every Show/Delete button
-$('list').addEventListener('click', e => {
-  const show = e.target.closest('[data-show]'), del = e.target.closest('[data-del]');
-  if (show) {
-    const t = trips.find(x => x.id === Number(show.dataset.show));
-    if (t) { showTicket(t); showOnMap(t); window.scrollTo({top: 0, behavior: 'smooth'}); }
-  } else if (del) {
-    trips = trips.filter(x => x.id !== Number(del.dataset.del));
-    write(KEY_TRIPS, trips); render();
-  }
+$('list').addEventListener('click',e=>{
+const show = e.target.closest('[data-show]'), del = e.target.closest('[data-del]');
+if(show){
+const t = trips.find(x=>x.id===Number(show.dataset.show));
+if(t){
+showTicket(t);
+showOnMap(t);
+window.scrollTo({top:0,behavior:'smooth'});
+}
+}else if(del){
+trips = trips.filter(x=>x.id!==Number(del.dataset.del));
+write(KEY_TRIPS,trips);
+render();
+}
 });
 
-['fMode', 'fMin', 'fMax', 'fText'].forEach(id => $(id).addEventListener('input', render));
-$('reset').addEventListener('click', () => { ['fMode', 'fMin', 'fMax', 'fText'].forEach(id => $(id).value = ''); render(); });
-$('clear').addEventListener('click', () => {
-  if (trips.length && confirm('Delete all saved trips? This cannot be undone.')) {
-    trips = []; write(KEY_TRIPS, trips); routeLayer.clearLayers(); $('ticket').classList.add('hidden'); render();
-  }
+['fMode','fMin','fMax','fText'].forEach(id=>$(id).addEventListener('input',render));
+
+$('reset').addEventListener('click',()=>{
+['fMode','fMin','fMax','fText'].forEach(id=>$(id).value='');
+render();
+});
+
+$('clear').addEventListener('click',()=>{
+if(trips.length&&confirm('Delete all saved trips? This cannot be undone.')){
+trips = [];
+write(KEY_TRIPS,trips);
+routeLayer.clearLayers();
+$('ticket').classList.add('hidden');
+render();
+}
 });
 
 render();
-if (trips.length) { showTicket(trips[0]); showOnMap(trips[0]); }   // restore the latest trip on page load
-
+if(trips.length){
+showTicket(trips[0]);
+showOnMap(trips[0]);
+}
 </script>
 </body>
 </html>
+
